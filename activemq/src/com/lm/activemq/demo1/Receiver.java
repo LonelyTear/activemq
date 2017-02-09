@@ -1,4 +1,4 @@
-package com.lm.activemq;
+package com.lm.activemq.demo1;
 
 /** 
  * @Header: Receiver.java 

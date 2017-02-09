@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>activemq</display-name>
+  	<!-- 生产者往指定目的地Destination发送消息后，接下来就是消费者对指定目的地的消息进行消费了。
+  	那么消费者是如何知道有生产者发送消息到指定目的地Destination了呢？
+  	每个消费者对应每个目的地都需要有对应的MessageListenerContainer。
+  	对于消息监听容器而言，除了要知道监听哪个目的地之外，
+  	还需要知道到哪里去监听，也就是说它还需要知道去监听哪个JMS服务器，
+  	通过配置MessageListenerContainer的时候往里面注入一个ConnectionFactory来实现的。
+  	所以我们在配置一个MessageListenerContainer的时候有三个属性必须指定：
+  	一个是表示从哪里监听的ConnectionFactory；
+  	一个是表示监听什么的Destination；
+  	一个是接收到消息以后进行消息处理的MessageListener。 -->
+  	<!-- 消息消费者 start-->
+
+    <!-- 定义Queue监听器 -->
+    <jms:listener-container destination-type="queue" container-type="default" connection-factory="connectionFactory" acknowledge="auto">
+        <jms:listener destination="test.queue" ref="queueReceiver1"/>
+        <jms:listener destination="test.queue" ref="queueReceiver2"/>
+    </jms:listener-container>
+
+    <!-- 定义Topic监听器 -->
+    <jms:listener-container destination-type="topic" container-type="default" connection-factory="connectionFactory" acknowledge="auto">
+        <jms:listener destination="test.topic" ref="topicReceiver1"/>
+        <jms:listener destination="test.topic" ref="topicReceiver2"/>
+    </jms:listener-container>
+
+    <!-- 消息消费者 end -->
+</web-app>
